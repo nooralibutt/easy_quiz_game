@@ -1,5 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
 
 class QuizSelectionScreen extends StatelessWidget {
@@ -90,23 +91,10 @@ class QuizSelectionScreen extends StatelessWidget {
                 const SizedBox(height: 80),
               ],
             ),
-            Positioned(
+            const Positioned(
               left: 75,
               right: 75,
-              child: Container(
-                height: 75,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage(controller.labelPath),
-                )),
-                child: Center(
-                  child: Text(
-                    'Select',
-                    style: theme.textTheme.headlineMedium!.copyWith(
-                        color: theme.primaryColor, fontWeight: FontWeight.bold),
-                  ),
-                ),
-              ),
+              child: LabelHeader(title: 'Select'),
             ),
             Positioned(
               right: 10,
