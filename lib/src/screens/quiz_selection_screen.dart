@@ -38,6 +38,7 @@ class QuizSelectionScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Expanded(
                             child: CategoryContainer(
@@ -49,7 +50,7 @@ class QuizSelectionScreen extends StatelessWidget {
                           Expanded(
                             child: CategoryContainer(
                               title: 'Football',
-                              img: 'assets/images/coin.png',
+                              img: 'assets/images/diamond.png',
                             ),
                           ),
                           SizedBox(width: 10),
@@ -63,6 +64,7 @@ class QuizSelectionScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Row(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Expanded(
                             child: FramedButton(
@@ -122,10 +124,10 @@ class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     super.key,
     required this.img,
-    required this.title,
+    this.title,
   });
 
-  final String title;
+  final String? title;
   final String img;
 
   @override
@@ -140,27 +142,27 @@ class CategoryContainer extends StatelessWidget {
       ),
       child: Column(
         children: [
-          FittedBox(child: Text(title)),
-          const SizedBox(height: 10),
-          FittedBox(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  stops: const [0, 1],
-                  begin: const Alignment(1, 1),
-                  end: const Alignment(1, -1),
-                  colors: [
-                    controller.primaryColor,
-                    controller.secondaryColor,
-                  ],
-                ),
-                borderRadius: const BorderRadius.all(Radius.circular(10)),
-                border: Border.all(
-                    color: theme.colorScheme.inversePrimary, width: 1),
+          if (title != null && title!.isNotEmpty)
+            FittedBox(
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 10),
+                child: Text(title!),
               ),
-              child: Image(image: AssetImage(img)),
             ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                stops: const [0, 1],
+                begin: const Alignment(1, 1),
+                end: const Alignment(1, -1),
+                colors: [controller.primaryColor, controller.secondaryColor],
+              ),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
+              border:
+                  Border.all(color: theme.colorScheme.inversePrimary, width: 1),
+            ),
+            child: Image(image: AssetImage(img)),
           ),
         ],
       ),
