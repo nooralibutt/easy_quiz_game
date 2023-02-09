@@ -11,6 +11,9 @@ class EasyQuizGameController extends InheritedWidget {
     this.bgImagePath,
     required this.buttonPath,
     required this.labelPath,
+    required this.gradient,
+    required this.primaryColor,
+    required this.secondaryColor,
     required super.child,
     this.placementBuilder,
     this.onTapEvent,
@@ -28,6 +31,15 @@ class EasyQuizGameController extends InheritedWidget {
 
   /// This will be added as a label image
   final String labelPath;
+
+  /// This will be primary gradient
+  final Gradient gradient;
+
+  /// This will be primary color
+  final Color primaryColor;
+
+  /// This will be secondary color
+  final Color secondaryColor;
 
   /// [placementBuilder] is used to build your custom widget at specific places
   final PlacementBuilder? placementBuilder;

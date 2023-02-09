@@ -1,6 +1,7 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:flutter/material.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -14,9 +15,11 @@ class MenuScreen extends StatelessWidget {
     return BaseScaffold(
       imagePath: controller.bgImagePath,
       body: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           children: [
+            const ScoreBar(),
+            const SizedBox(height: 20),
             Image(image: AssetImage(controller.menuLogoPath)),
             const Spacer(),
             FramedButton(
@@ -34,6 +37,7 @@ class MenuScreen extends StatelessWidget {
               title: 'Quiz Show',
               onPress: () {},
             ),
+            const SizedBox(height: 100),
           ],
         ),
       ),

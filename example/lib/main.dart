@@ -32,10 +32,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       body: const Center(
         child: EasyQuizGameApp(
+          primaryColor: Color(0xff300c79),
           menuLogoPath: 'assets/images/logo.png',
           buttonPath: 'assets/images/primary_button.png',
           labelPath: 'assets/images/lable.png',
           bgImagePath: 'assets/images/bg.png',
+          gradient: LinearGradient(
+            stops: [0, 1],
+            begin: Alignment(1, -1),
+            end: Alignment(0, 1),
+            colors: [Color(0xff300c79), Color(0xff753bc6)],
+          ),
+          secondaryColor: Color(0xff753bc6),
         ),
       ),
       floatingActionButton: FloatingActionButton(

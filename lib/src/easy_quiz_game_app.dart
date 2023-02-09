@@ -15,6 +15,15 @@ class EasyQuizGameApp extends StatelessWidget {
   /// This will be added as a label image
   final String labelPath;
 
+  /// This will be primary gradient
+  final Gradient gradient;
+
+  /// This will be primary color
+  final Color primaryColor;
+
+  /// This will be secondary color
+  final Color secondaryColor;
+
   /// [placementBuilder] is used to build your custom widget at specific places
   final PlacementBuilder? placementBuilder;
 
@@ -29,6 +38,9 @@ class EasyQuizGameApp extends StatelessWidget {
     this.placementBuilder,
     required this.buttonPath,
     required this.labelPath,
+    required this.gradient,
+    required this.primaryColor,
+    required this.secondaryColor,
   }) : super(key: key);
 
   @override
@@ -41,6 +53,9 @@ class EasyQuizGameApp extends StatelessWidget {
       bgImagePath: bgImagePath,
       buttonPath: buttonPath,
       labelPath: labelPath,
+      gradient: gradient,
+      primaryColor: primaryColor,
+      secondaryColor: secondaryColor,
 
       /// Package has its own navigation
       child: Navigator(
@@ -72,6 +87,15 @@ class EasyQuizGameApp extends StatelessWidget {
     /// This will be added as a label image
     required final String labelPath,
 
+    /// This will be primary gradient
+    required final Gradient gradient,
+
+    /// This will be primary color
+    required final Color primaryColor,
+
+    /// This will be secondary color
+    required final Color secondaryColor,
+
     /// [placementBuilder] is used to build your custom widget at specific places
     final PlacementBuilder? placementBuilder,
 
@@ -89,6 +113,9 @@ class EasyQuizGameApp extends StatelessWidget {
               onTapEvent: onTapEvent,
               buttonPath: buttonPath,
               labelPath: labelPath,
+              gradient: gradient,
+              primaryColor: primaryColor,
+              secondaryColor: secondaryColor,
             ),
           ),
         ),
