@@ -2,6 +2,7 @@ import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
+import 'package:easy_quiz_game/src/widgets/timer_widget.dart';
 import 'package:flutter/material.dart';
 
 class QuizGameplayScreen extends StatelessWidget {
@@ -20,6 +21,9 @@ class QuizGameplayScreen extends StatelessWidget {
         child: Column(
           children: [
             const ScoreBar(),
+            const SizedBox(height: 10),
+            const TimerWidget(),
+            const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
