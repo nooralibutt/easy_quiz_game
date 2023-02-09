@@ -1,6 +1,8 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/screens/quiz_selection_screen.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +15,6 @@ class MenuScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
     return BaseScaffold(
-      imagePath: controller.bgImagePath,
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -25,7 +26,8 @@ class MenuScreen extends StatelessWidget {
             FramedButton(
               buttonPath: controller.buttonPath,
               title: 'Play',
-              onPress: () {},
+              onPress: () => Navigator.of(context)
+                  .push(FullScreenModal(body: const QuizSelectionScreen())),
             ),
             FramedButton(
               buttonPath: controller.buttonPath,
