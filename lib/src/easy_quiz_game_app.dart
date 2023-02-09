@@ -2,6 +2,8 @@ import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 
+import 'screens/quiz_gameplay_screen.dart';
+
 class EasyQuizGameApp extends StatelessWidget {
   /// This is the main menu Logo path
   final String menuLogoPath;
@@ -64,6 +66,8 @@ class EasyQuizGameApp extends StatelessWidget {
           switch (settings.name) {
             case MenuScreen.routeName:
               return _generatePage(const MenuScreen());
+            case QuizGameplayScreen.routeName:
+              return _generatePage(const QuizGameplayScreen());
           }
           return null;
         },
