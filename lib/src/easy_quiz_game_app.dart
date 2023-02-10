@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -68,6 +69,8 @@ class EasyQuizGameApp extends StatelessWidget {
               return _generatePage(const MenuScreen());
             case QuizGameplayScreen.routeName:
               return _generatePage(const QuizGameplayScreen());
+            case ExtraLifeScreen.routeName:
+              return _generatePage(const ExtraLifeScreen());
           }
           return null;
         },

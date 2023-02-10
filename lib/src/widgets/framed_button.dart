@@ -1,19 +1,21 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:flutter/material.dart';
 
 class FramedButton extends StatelessWidget {
   const FramedButton({
     super.key,
-    required this.buttonPath,
+    this.buttonPath,
     required this.title,
     required this.onPress,
   });
 
-  final String buttonPath;
+  final String? buttonPath;
   final String title;
   final VoidCallback onPress;
 
   @override
   Widget build(BuildContext context) {
+    final path = buttonPath ?? EasyQuizGameController.of(context).buttonPath;
     return GestureDetector(
       onTap: onPress,
       child: Container(
@@ -21,7 +23,7 @@ class FramedButton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.7,
         height: 80,
         decoration: BoxDecoration(
-          image: DecorationImage(image: AssetImage(buttonPath)),
+          image: DecorationImage(image: AssetImage(path)),
         ),
         child: FittedBox(
           child: Center(
