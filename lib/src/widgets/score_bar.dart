@@ -24,7 +24,7 @@ class ScoreBar extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         const Image(
-          image: AssetImage('assets/images/coin.png'),
+          image: AssetImage('assets/images/life.png'),
           width: 50,
         ),
         const SizedBox(width: 10),
