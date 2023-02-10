@@ -10,6 +10,7 @@ class LevelCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return BaseScaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -17,8 +18,11 @@ class LevelCompleteScreen extends StatelessWidget {
           children: [
             const LabelHeader(title: 'CONGRATULATIONS'),
             const Spacer(),
-            const Image(
-              image: AssetImage('assets/images/gem_box.png'),
+            const Padding(
+              padding: EdgeInsets.all(20),
+              child: Image(
+                image: AssetImage('assets/images/gem_box.png'),
+              ),
             ),
             const SizedBox(height: 20),
             Row(
@@ -29,14 +33,14 @@ class LevelCompleteScreen extends StatelessWidget {
                   height: 20,
                 ),
                 const SizedBox(width: 10),
-                Text('200', style: Theme.of(context).textTheme.bodyLarge),
+                Text('200', style: theme.textTheme.bodyLarge),
                 const SizedBox(width: 30),
                 const Image(
                   image: AssetImage('assets/images/diamond.png'),
                   height: 20,
                 ),
                 const SizedBox(width: 10),
-                Text('50', style: Theme.of(context).textTheme.bodyLarge),
+                Text('50', style: theme.textTheme.bodyLarge),
               ],
             ),
             const Spacer(),
