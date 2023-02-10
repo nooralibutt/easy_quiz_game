@@ -35,7 +35,7 @@ class _MyHomePageState extends State<MyHomePage> {
           primaryColor: Color(0xff300c79),
           menuLogoPath: 'assets/images/logo.png',
           buttonPath: 'assets/images/primary_button.png',
-          labelPath: 'assets/images/lable.png',
+          labelPath: 'assets/images/label.png',
           bgImagePath: 'assets/images/bg.png',
           gradient: LinearGradient(
             stops: [0, 1],
