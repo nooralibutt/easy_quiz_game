@@ -1,5 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -71,6 +72,8 @@ class EasyQuizGameApp extends StatelessWidget {
               return _generatePage(const QuizGameplayScreen());
             case ExtraLifeScreen.routeName:
               return _generatePage(const ExtraLifeScreen());
+            case LevelCompleteScreen.routeName:
+              return _generatePage(const LevelCompleteScreen());
           }
           return null;
         },
@@ -78,53 +81,5 @@ class EasyQuizGameApp extends StatelessWidget {
     );
   }
 
-  Route _generatePage(child) => MaterialPageRoute(builder: (_) => child);
-
-  static void launchApp(
-    BuildContext context, {
-    /// This is the main menu Logo path
-    required final String menuLogoPath,
-
-    /// This will be added as a background image with blur effect
-    final String? bgImagePath,
-
-    /// This will be added as a button image
-    required final String buttonPath,
-
-    /// This will be added as a label image
-    required final String labelPath,
-
-    /// This will be primary gradient
-    required final Gradient gradient,
-
-    /// This will be primary color
-    required final Color primaryColor,
-
-    /// This will be secondary color
-    required final Color secondaryColor,
-
-    /// [placementBuilder] is used to build your custom widget at specific places
-    final PlacementBuilder? placementBuilder,
-
-    /// [onTapEvent] will be call on every event preformed by the user
-    final EventActionCallback? onTapEvent,
-  }) =>
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          fullscreenDialog: true,
-          builder: (context) => Scaffold(
-            body: EasyQuizGameApp(
-              menuLogoPath: menuLogoPath,
-              bgImagePath: bgImagePath,
-              placementBuilder: placementBuilder,
-              onTapEvent: onTapEvent,
-              buttonPath: buttonPath,
-              labelPath: labelPath,
-              gradient: gradient,
-              primaryColor: primaryColor,
-              secondaryColor: secondaryColor,
-            ),
-          ),
-        ),
-      );
+  static Route _generatePage(child) => MaterialPageRoute(builder: (_) => child);
 }
