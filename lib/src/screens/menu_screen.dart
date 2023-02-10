@@ -1,5 +1,4 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
-import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
 import 'package:easy_quiz_game/src/screens/quiz_selection_screen.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
@@ -33,8 +32,7 @@ class MenuScreen extends StatelessWidget {
             FramedButton(
               buttonPath: controller.buttonPath,
               title: 'Question of the Day',
-              onPress: () =>
-                  Navigator.pushNamed(context, QuizGameplayScreen.routeName),
+              onPress: () {},
             ),
             FramedButton(
               buttonPath: controller.buttonPath,
