@@ -1,6 +1,7 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
-import 'package:easy_quiz_game/src/screens/quiz_selection_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_progress_screen.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
@@ -28,7 +29,7 @@ class MenuScreen extends StatelessWidget {
               buttonPath: controller.buttonPath,
               title: 'Play',
               onPress: () => Navigator.of(context)
-                  .push(FullScreenModal(body: const QuizSelectionScreen())),
+                  .push(FullScreenModal(body: const LevelProgressScreen())),
             ),
             FramedButton(
               buttonPath: controller.buttonPath,
@@ -39,7 +40,8 @@ class MenuScreen extends StatelessWidget {
             FramedButton(
               buttonPath: controller.buttonPath,
               title: 'Quiz Show',
-              onPress: () {},
+              onPress: () =>
+                  Navigator.pushNamed(context, LevelCompleteScreen.routeName),
             ),
             const SizedBox(height: 100),
           ],
