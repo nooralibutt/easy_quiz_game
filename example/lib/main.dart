@@ -1,3 +1,4 @@
+import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +12,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: ThemeData(primarySwatch: Colors.blue),
+      theme: ThemeData.dark(),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
   }
@@ -29,15 +30,20 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title)),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            Text(
-              'You have pushed the button this many times:',
-            ),
-          ],
+      body: const Center(
+        child: EasyQuizGameApp(
+          primaryColor: Color(0xff300c79),
+          menuLogoPath: 'assets/images/logo.png',
+          buttonPath: 'assets/images/primary_button.png',
+          labelPath: 'assets/images/lable.png',
+          bgImagePath: 'assets/images/bg.png',
+          gradient: LinearGradient(
+            stops: [0, 1],
+            begin: Alignment(1, -1),
+            end: Alignment(0, 1),
+            colors: [Color(0xff300c79), Color(0xff753bc6)],
+          ),
+          secondaryColor: Color(0xff753bc6),
         ),
       ),
       floatingActionButton: FloatingActionButton(

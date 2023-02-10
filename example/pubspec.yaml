@@ -11,6 +11,8 @@ dependencies:
     sdk: flutter
 
   cupertino_icons: ^1.0.5
+  easy_quiz_game:
+    path: ../
 
 dev_dependencies:
   flutter_test:
@@ -21,3 +23,7 @@ dev_dependencies:
 flutter:
 
   uses-material-design: true
+
+  assets:
+    - assets/
+    - assets/images/
