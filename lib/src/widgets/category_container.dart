@@ -40,7 +40,11 @@ class CategoryContainer extends StatelessWidget {
               border:
                   Border.all(color: theme.colorScheme.inversePrimary, width: 1),
             ),
-            child: Image(image: AssetImage(img)),
+            child: Image(
+              image: AssetImage(img),
+              width: 50,
+              height: 50,
+            ),
           ),
         ],
       ),
