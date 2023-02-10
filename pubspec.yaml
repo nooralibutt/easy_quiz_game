@@ -11,6 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
 
+  flutter_countdown_timer: ^4.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

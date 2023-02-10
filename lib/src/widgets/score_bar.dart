@@ -8,7 +8,12 @@ class ScoreBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        MyIconButton(onPress: () {}, icon: Icons.menu),
+        if (Navigator.canPop(context))
+          MyIconButton(
+              onPress: () => Navigator.pop(context),
+              icon: Icons.arrow_back_ios_new_rounded)
+        else
+          MyIconButton(onPress: () {}, icon: Icons.menu),
         const SizedBox(width: 10),
         Expanded(
           child: ScoreContainer(
