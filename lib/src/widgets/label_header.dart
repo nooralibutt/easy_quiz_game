@@ -12,15 +12,22 @@ class LabelHeader extends StatelessWidget {
 
     return Container(
       height: 75,
+      width: MediaQuery.of(context).size.width * 0.5,
       decoration: BoxDecoration(
-          image: DecorationImage(
-        image: AssetImage(controller.labelPath),
-      )),
-      child: Center(
-        child: Text(
-          title,
-          style: theme.textTheme.headlineMedium!
-              .copyWith(color: theme.primaryColor, fontWeight: FontWeight.bold),
+        image: DecorationImage(
+          image: AssetImage(controller.labelPath),
+        ),
+      ),
+      child: FittedBox(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+            child: Text(
+              title,
+              style: theme.textTheme.headlineMedium!.copyWith(
+                  color: theme.primaryColor, fontWeight: FontWeight.bold),
+            ),
+          ),
         ),
       ),
     );
