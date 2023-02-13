@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
@@ -28,6 +29,9 @@ class EasyQuizGameApp extends StatelessWidget {
   /// This will be secondary color
   final Color secondaryColor;
 
+  /// This will be the quiz data that you have to provide
+  final List<QuizCategory> quizCategories;
+
   /// [placementBuilder] is used to build your custom widget at specific places
   final PlacementBuilder? placementBuilder;
 
@@ -45,6 +49,7 @@ class EasyQuizGameApp extends StatelessWidget {
     required this.gradient,
     required this.primaryColor,
     required this.secondaryColor,
+    required this.quizCategories,
   }) : super(key: key);
 
   @override
@@ -62,6 +67,7 @@ class EasyQuizGameApp extends StatelessWidget {
       secondaryColor: secondaryColor,
 
       /// Package has its own navigation
+      quizCategories: quizCategories,
       child: Navigator(
         initialRoute: MenuScreen.routeName,
         onGenerateRoute: (settings) {

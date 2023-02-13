@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/easy_quiz_game.dart';
+import 'package:example/model/quiz_data.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -49,6 +50,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   static Widget getGameWidget(BuildContext context) {
     return EasyQuizGameApp(
+      quizCategories: data,
       primaryColor: Theme.of(context).primaryColor,
       menuLogoPath: 'assets/images/logo.png',
       buttonPath: 'assets/images/primary_button.png',

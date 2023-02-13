@@ -1,4 +1,4 @@
-import 'package:easy_quiz_game/src/models/enums.dart';
+import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:flutter/material.dart';
 
 typedef PlacementBuilder = Widget Function(BuildContext, QuizPlacement);
@@ -7,6 +7,7 @@ typedef EventActionCallback = void Function(BuildContext, QuizEventAction);
 class EasyQuizGameController extends InheritedWidget {
   const EasyQuizGameController({
     super.key,
+    required this.quizCategories,
     required this.menuLogoPath,
     this.bgImagePath,
     required this.buttonPath,
@@ -40,6 +41,9 @@ class EasyQuizGameController extends InheritedWidget {
 
   /// This will be secondary color
   final Color secondaryColor;
+
+  /// This will be the quiz data that you have to provide
+  final List<QuizCategory> quizCategories;
 
   /// [placementBuilder] is used to build your custom widget at specific places
   final PlacementBuilder? placementBuilder;
