@@ -42,23 +42,24 @@ class QuizSelectionScreen extends StatelessWidget {
                         style: theme.textTheme.titleLarge,
                       ),
                       const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 10,
+                      Row(
                         children: quizCategories
-                            .map((e) => InkWell(
-                                  onTap: () {
-                                    e.quizzes.shuffle();
-                                    final selectedQuizzes =
-                                        e.quizzes.take(3).toList();
-                                    Navigator.of(context)
-                                        .pushReplacement(FullScreenModal(
-                                      body: LevelProgressDialog(
-                                          quizzes: selectedQuizzes),
-                                    ));
-                                  },
-                                  child: CategoryContainer(
-                                    title: e.name.toUpperCase(),
-                                    img: e.iconImage,
+                            .map((e) => Expanded(
+                                  child: InkWell(
+                                    onTap: () {
+                                      e.quizzes.shuffle();
+                                      final selectedQuizzes =
+                                          e.quizzes.take(3).toList();
+                                      Navigator.of(context)
+                                          .pushReplacement(FullScreenModal(
+                                        body: LevelProgressDialog(
+                                            quizzes: selectedQuizzes),
+                                      ));
+                                    },
+                                    child: CategoryContainer(
+                                      title: e.name.toUpperCase(),
+                                      img: e.iconImage,
+                                    ),
                                   ),
                                 ))
                             .toList(),

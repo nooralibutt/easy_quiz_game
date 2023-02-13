@@ -13,6 +13,7 @@ class CategoryContainer extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 5),
       padding: const EdgeInsets.fromLTRB(8, 13, 8, 8),
       decoration: BoxDecoration(
         color: theme.primaryColorDark.withOpacity(0.4),

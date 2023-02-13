@@ -2,6 +2,7 @@ import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:easy_quiz_game/src/widgets/timer_widget.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,6 @@ class QuizGameplayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
-    final theme = Theme.of(context);
 
     return BaseScaffold(
       body: Padding(
@@ -32,7 +32,7 @@ class QuizGameplayScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Container(
-                      width: double.infinity,
+                      // width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         gradient: controller.gradient,
@@ -41,10 +41,7 @@ class QuizGameplayScreen extends StatelessWidget {
                         border:
                             Border.all(color: Colors.orange.shade300, width: 8),
                       ),
-                      child: Text(
-                        quiz.question,
-                        style: theme.textTheme.titleMedium,
-                      ),
+                      child: getImage(context),
                     ),
                     const SizedBox(height: 20),
                     ...quiz.options
@@ -59,5 +56,21 @@ class QuizGameplayScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget getImage(BuildContext context) {
+    final theme = Theme.of(context);
+
+    if (quiz.questionType == QuizQuestionType.text) {
+      return Text(
+        quiz.question,
+        style: theme.textTheme.titleMedium,
+      );
+    } else {
+      return ImageWidget(
+        imgPath: quiz.question,
+        fit: BoxFit.contain,
+      );
+    }
   }
 }
