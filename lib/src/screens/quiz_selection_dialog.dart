@@ -1,7 +1,8 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
-import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_progress_screen.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
 
@@ -12,6 +13,8 @@ class QuizSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
     final theme = Theme.of(context);
+    controller.quizCategories.shuffle();
+    final quizCategories = controller.quizCategories.take(3).toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -39,30 +42,26 @@ class QuizSelectionScreen extends StatelessWidget {
                         style: theme.textTheme.titleLarge,
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
-                          Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/coin.png',
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/diamond.png',
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/coin.png',
-                            ),
-                          ),
-                        ],
+                      Wrap(
+                        spacing: 10,
+                        children: quizCategories
+                            .map((e) => InkWell(
+                                  onTap: () {
+                                    e.quizzes.shuffle();
+                                    final selectedQuizzes =
+                                        e.quizzes.take(3).toList();
+                                    Navigator.of(context)
+                                        .pushReplacement(FullScreenModal(
+                                      body: LevelProgressDialog(
+                                          quizzes: selectedQuizzes),
+                                    ));
+                                  },
+                                  child: CategoryContainer(
+                                    title: e.name.toUpperCase(),
+                                    img: e.iconImage,
+                                  ),
+                                ))
+                            .toList(),
                       ),
                       const SizedBox(height: 20),
                       Row(
@@ -87,8 +86,7 @@ class QuizSelectionScreen extends StatelessWidget {
                       FramedButton(
                         buttonPath: controller.buttonPath,
                         title: 'PLAY FOR UNLOCK',
-                        onPress: () => Navigator.pushReplacementNamed(
-                            context, QuizGameplayScreen.routeName),
+                        onPress: () {},
                       ),
                     ],
                   ),

@@ -18,7 +18,7 @@ class EasyQuizGameController extends InheritedWidget {
     required super.child,
     this.placementBuilder,
     this.onTapEvent,
-    required this.context,
+    required this.parentContext,
   });
 
   /// This is the main menu Logo path
@@ -51,7 +51,7 @@ class EasyQuizGameController extends InheritedWidget {
   /// [onTapEvent] will be call on every event preformed by the user
   final EventActionCallback? onTapEvent;
 
-  final BuildContext context;
+  final BuildContext parentContext;
 
   static EasyQuizGameController? maybeOf(BuildContext context) {
     return context.dependOnInheritedWidgetOfExactType<EasyQuizGameController>();

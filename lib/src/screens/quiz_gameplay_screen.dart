@@ -1,3 +1,4 @@
+import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
@@ -8,7 +9,8 @@ import 'package:flutter/material.dart';
 class QuizGameplayScreen extends StatelessWidget {
   static const routeName = '/QuizGameplayScreen';
 
-  const QuizGameplayScreen({Key? key}) : super(key: key);
+  final Quiz quiz;
+  const QuizGameplayScreen({Key? key, required this.quiz}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,35 +42,14 @@ class QuizGameplayScreen extends StatelessWidget {
                             Border.all(color: Colors.orange.shade300, width: 8),
                       ),
                       child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.',
+                        quiz.question,
                         style: theme.textTheme.titleMedium,
                       ),
                     ),
                     const SizedBox(height: 20),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 1',
-                      onPress: () {},
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 2',
-                      onPress: () => Navigator.pushNamed(
-                          context, QuizGameplayScreen.routeName),
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 3',
-                      onPress: () {},
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 4',
-                      onPress: () {},
-                    ),
+                    ...quiz.options
+                        .map((e) => FramedButton(title: e, onPress: () {}))
+                        .toList(),
                     const SizedBox(height: 100),
                   ],
                 ),

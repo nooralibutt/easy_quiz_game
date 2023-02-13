@@ -58,16 +58,16 @@ class EasyQuizGameApp extends StatelessWidget {
       menuLogoPath: menuLogoPath,
       placementBuilder: placementBuilder,
       onTapEvent: onTapEvent,
-      context: context,
+      parentContext: context,
       bgImagePath: bgImagePath,
       buttonPath: buttonPath,
       labelPath: labelPath,
       gradient: gradient,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
+      quizCategories: quizCategories,
 
       /// Package has its own navigation
-      quizCategories: quizCategories,
       child: Navigator(
         initialRoute: MenuScreen.routeName,
         onGenerateRoute: (settings) {
@@ -75,7 +75,8 @@ class EasyQuizGameApp extends StatelessWidget {
             case MenuScreen.routeName:
               return _generatePage(const MenuScreen());
             case QuizGameplayScreen.routeName:
-              return _generatePage(const QuizGameplayScreen());
+              return _generatePage(
+                  QuizGameplayScreen(quiz: settings.arguments as Quiz));
             case ExtraLifeScreen.routeName:
               return _generatePage(const ExtraLifeScreen());
             case LevelCompleteScreen.routeName:
