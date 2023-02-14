@@ -1,7 +1,7 @@
 import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/widgets/answer_button.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
-import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:easy_quiz_game/src/widgets/timer_widget.dart';
@@ -32,7 +32,6 @@ class QuizGameplayScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Container(
-                      // width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         gradient: controller.gradient,
@@ -41,11 +40,14 @@ class QuizGameplayScreen extends StatelessWidget {
                         border:
                             Border.all(color: Colors.orange.shade300, width: 8),
                       ),
-                      child: getImage(context),
+                      child: getQuestion(context),
                     ),
                     const SizedBox(height: 20),
                     ...quiz.options
-                        .map((e) => FramedButton(title: e, onPress: () {}))
+                        .map((e) => AnswerButton(
+                              title: e,
+                              onTapAnswer: () {},
+                            ))
                         .toList(),
                     const SizedBox(height: 100),
                   ],
@@ -58,10 +60,9 @@ class QuizGameplayScreen extends StatelessWidget {
     );
   }
 
-  Widget getImage(BuildContext context) {
-    final theme = Theme.of(context);
-
+  Widget getQuestion(BuildContext context) {
     if (quiz.questionType == QuizQuestionType.text) {
+      final theme = Theme.of(context);
       return Text(
         quiz.question,
         style: theme.textTheme.titleMedium,
