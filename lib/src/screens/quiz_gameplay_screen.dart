@@ -1,19 +1,23 @@
+import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/widgets/answer_button.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
-import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:easy_quiz_game/src/widgets/timer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizGameplayScreen extends StatelessWidget {
   static const routeName = '/QuizGameplayScreen';
 
-  const QuizGameplayScreen({Key? key}) : super(key: key);
+  final Quiz quiz;
+  const QuizGameplayScreen({Key? key, required this.quiz}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
-    final theme = Theme.of(context);
 
     return BaseScaffold(
       body: Padding(
@@ -30,7 +34,6 @@ class QuizGameplayScreen extends StatelessWidget {
                   children: [
                     const SizedBox(height: 20),
                     Container(
-                      width: double.infinity,
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
                         gradient: controller.gradient,
@@ -39,35 +42,12 @@ class QuizGameplayScreen extends StatelessWidget {
                         border:
                             Border.all(color: Colors.orange.shade300, width: 8),
                       ),
-                      child: Text(
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.'
-                        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.',
-                        style: theme.textTheme.titleMedium,
-                      ),
+                      child: getQuestion(context),
                     ),
                     const SizedBox(height: 20),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 1',
-                      onPress: () {},
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 2',
-                      onPress: () => Navigator.pushNamed(
-                          context, QuizGameplayScreen.routeName),
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 3',
-                      onPress: () {},
-                    ),
-                    FramedButton(
-                      buttonPath: controller.buttonPath,
-                      title: 'Option 4',
-                      onPress: () {},
+                    ButtonListView(
+                      options: quiz.options,
+                      correctIndex: quiz.correctIndex,
                     ),
                     const SizedBox(height: 100),
                   ],
@@ -77,6 +57,44 @@ class QuizGameplayScreen extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  Widget getQuestion(BuildContext context) {
+    if (quiz.questionType == QuizQuestionType.text) {
+      final theme = Theme.of(context);
+      return Text(
+        quiz.question,
+        style: theme.textTheme.titleMedium,
+      );
+    } else {
+      return ImageWidget(
+        imgPath: quiz.question,
+        fit: BoxFit.contain,
+      );
+    }
+  }
+}
+
+class ButtonListView extends StatelessWidget {
+  final List<String> options;
+  final int correctIndex;
+  const ButtonListView(
+      {Key? key, required this.options, required this.correctIndex})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.read<GameplayProvider>();
+
+    return Column(
+      children: options
+          .map((e) => AnswerButton(
+                title: e,
+                onTapAnswer: provider.onTapAnswer,
+                correctAnswer: options[correctIndex],
+              ))
+          .toList(),
     );
   }
 }

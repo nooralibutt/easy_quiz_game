@@ -1,17 +1,22 @@
+import 'package:collection/collection.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
 
-class QuizSelectionScreen extends StatelessWidget {
-  const QuizSelectionScreen({Key? key}) : super(key: key);
+class LevelProgressDialog extends StatelessWidget {
+  final List<Quiz> quizzes;
+  final int? completedCount;
+  const LevelProgressDialog(
+      {Key? key, required this.quizzes, this.completedCount})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
-    final theme = Theme.of(context);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -31,64 +36,51 @@ class QuizSelectionScreen extends StatelessWidget {
                     border: Border.all(color: Colors.orange.shade300, width: 8),
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(height: 40),
-                      Text(
-                        'Tap to Choose a Category',
-                        style: theme.textTheme.titleLarge,
-                      ),
-                      const SizedBox(height: 20),
                       Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
                         children: const [
                           Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/coin.png',
+                            child: Image(
+                              image: AssetImage('assets/images/box.png'),
                             ),
                           ),
-                          SizedBox(width: 10),
+                          SizedBox(width: 20),
+                          Icon(Icons.add),
+                          SizedBox(width: 20),
                           Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/diamond.png',
-                            ),
-                          ),
-                          SizedBox(width: 10),
-                          Expanded(
-                            child: CategoryContainer(
-                              title: 'Football',
-                              img: 'assets/images/coin.png',
+                            child: Image(
+                              image: AssetImage('assets/images/diamond.png'),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: FramedButton(
-                              buttonPath: controller.buttonPath,
-                              title: 'ROLL FREE',
-                              onPress: () {},
-                            ),
-                          ),
-                          Expanded(
-                            child: FramedButton(
-                              buttonPath: controller.buttonPath,
-                              title: 'ROLL',
-                              onPress: () {},
-                            ),
-                          ),
-                        ],
+                      Wrap(
+                        spacing: 5,
+                        children: quizzes.mapIndexed((i, e) {
+                          String img = 'assets/images/ques_mark.png';
+                          if (completedCount != null && completedCount! <= i) {
+                            img = 'assets/images/done.png';
+                          }
+                          return SizedBox(
+                              width: 100, child: CategoryContainer(img: img));
+                        }).toList(),
                       ),
+                      const SizedBox(height: 20),
                       FramedButton(
                         buttonPath: controller.buttonPath,
-                        title: 'PLAY FOR UNLOCK',
-                        onPress: () => Navigator.pushReplacementNamed(
-                            context, QuizGameplayScreen.routeName),
+                        title: 'Next',
+                        onPress: () {
+                          int questionNumber = 0;
+                          if (completedCount != null) {
+                            questionNumber = completedCount!;
+                          }
+
+                          Navigator.pushReplacementNamed(
+                              context, QuizGameplayScreen.routeName,
+                              arguments: quizzes[questionNumber]);
+                        },
                       ),
                     ],
                   ),
@@ -99,7 +91,7 @@ class QuizSelectionScreen extends StatelessWidget {
             const Positioned(
               left: 75,
               right: 75,
-              child: LabelHeader(title: 'Select'),
+              child: LabelHeader(title: 'Level'),
             ),
             Positioned(
               right: 10,

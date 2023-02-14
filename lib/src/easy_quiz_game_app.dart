@@ -1,8 +1,11 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/quiz_category.dart';
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'screens/quiz_gameplay_screen.dart';
 
@@ -28,6 +31,9 @@ class EasyQuizGameApp extends StatelessWidget {
   /// This will be secondary color
   final Color secondaryColor;
 
+  /// This will be the quiz data that you have to provide
+  final List<QuizCategory> quizCategories;
+
   /// [placementBuilder] is used to build your custom widget at specific places
   final PlacementBuilder? placementBuilder;
 
@@ -45,6 +51,7 @@ class EasyQuizGameApp extends StatelessWidget {
     required this.gradient,
     required this.primaryColor,
     required this.secondaryColor,
+    required this.quizCategories,
   }) : super(key: key);
 
   @override
@@ -53,30 +60,35 @@ class EasyQuizGameApp extends StatelessWidget {
       menuLogoPath: menuLogoPath,
       placementBuilder: placementBuilder,
       onTapEvent: onTapEvent,
-      context: context,
+      parentContext: context,
       bgImagePath: bgImagePath,
       buttonPath: buttonPath,
       labelPath: labelPath,
       gradient: gradient,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
+      quizCategories: quizCategories,
 
       /// Package has its own navigation
-      child: Navigator(
-        initialRoute: MenuScreen.routeName,
-        onGenerateRoute: (settings) {
-          switch (settings.name) {
-            case MenuScreen.routeName:
-              return _generatePage(const MenuScreen());
-            case QuizGameplayScreen.routeName:
-              return _generatePage(const QuizGameplayScreen());
-            case ExtraLifeScreen.routeName:
-              return _generatePage(const ExtraLifeScreen());
-            case LevelCompleteScreen.routeName:
-              return _generatePage(const LevelCompleteScreen());
-          }
-          return null;
-        },
+      child: ChangeNotifierProvider(
+        create: (BuildContext context) => GameplayProvider(),
+        child: Navigator(
+          initialRoute: MenuScreen.routeName,
+          onGenerateRoute: (settings) {
+            switch (settings.name) {
+              case MenuScreen.routeName:
+                return _generatePage(const MenuScreen());
+              case QuizGameplayScreen.routeName:
+                return _generatePage(
+                    QuizGameplayScreen(quiz: settings.arguments as Quiz));
+              case ExtraLifeScreen.routeName:
+                return _generatePage(const ExtraLifeScreen());
+              case LevelCompleteScreen.routeName:
+                return _generatePage(const LevelCompleteScreen());
+            }
+            return null;
+          },
+        ),
       ),
     );
   }
