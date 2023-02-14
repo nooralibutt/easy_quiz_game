@@ -1,35 +1,77 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
-import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 
-class TimerWidget extends StatefulWidget {
-  const TimerWidget({Key? key}) : super(key: key);
+class CountDownTimer extends StatefulWidget {
+  const CountDownTimer({
+    Key? key,
+    this.whenTimeExpires,
+    this.quizTimeInSec = 30,
+  }) : super(key: key);
+  final int quizTimeInSec;
+  final VoidCallback? whenTimeExpires;
 
   @override
-  State<TimerWidget> createState() => _TimerWidgetState();
+  State<CountDownTimer> createState() => _CountDownTimerState();
 }
 
-class _TimerWidgetState extends State<TimerWidget> {
-  CountdownTimerController? controller;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 30;
+class _CountDownTimerState extends State<CountDownTimer>
+    with TickerProviderStateMixin {
+  late AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
+    final duration = Duration(seconds: widget.quizTimeInSec);
+    _controller = AnimationController(
+      vsync: this,
+      reverseDuration: duration,
+    );
+    _controller.reverse(from: duration.inSeconds.toDouble());
+    _controller.addStatusListener((status) {
+      if (status == AnimationStatus.completed ||
+          status == AnimationStatus.dismissed) {
+        widget.whenTimeExpires?.call();
+      }
+    });
   }
 
-  void onEnd() {
-    print('onEnd');
+  String get timerDisplayString {
+    final duration = _controller.reverseDuration! * _controller.value;
+    return formatHHMMSS(duration.inSeconds);
+  }
+
+  String formatHHMMSS(int seconds) {
+    final hours = (seconds / 3600).truncate();
+    seconds = (seconds % 3600).truncate();
+    final minutes = (seconds / 60).truncate();
+
+    final hoursStr = (hours).toString().padLeft(2, '0');
+    final minutesStr = (minutes).toString().padLeft(2, '0');
+    final secondsStr = (seconds % 60).toString().padLeft(2, '0');
+
+    if (hours == 0) {
+      return "$minutesStr:$secondsStr";
+    }
+
+    return "$hoursStr:$minutesStr:$secondsStr";
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return CountdownTimer(
-      controller: controller,
-      textStyle: Theme.of(context).textTheme.titleLarge,
-      onEnd: onEnd,
-      endTime: endTime,
+    return Center(
+      child: AnimatedBuilder(
+          animation: _controller,
+          builder: (_, Widget? child) {
+            return Text(
+              timerDisplayString,
+              style: Theme.of(context).textTheme.titleLarge,
+            );
+          }),
     );
   }
 }

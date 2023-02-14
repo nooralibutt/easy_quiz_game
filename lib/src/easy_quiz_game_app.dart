@@ -79,8 +79,7 @@ class EasyQuizGameApp extends StatelessWidget {
               case MenuScreen.routeName:
                 return _generatePage(const MenuScreen());
               case QuizGameplayScreen.routeName:
-                return _generatePage(
-                    QuizGameplayScreen(quiz: settings.arguments as Quiz));
+                return _generatePage(QuizGameplayScreen());
               case ExtraLifeScreen.routeName:
                 return _generatePage(const ExtraLifeScreen());
               case LevelCompleteScreen.routeName:

@@ -1,7 +1,9 @@
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ExtraLifeScreen extends StatelessWidget {
   static const routeName = '/ExtraLifeScreen';
@@ -32,8 +34,11 @@ class ExtraLifeScreen extends StatelessWidget {
             const Spacer(),
             FramedButton(
                 title: 'USE EXTRA LIFE',
-                onPress: () => Navigator.pushReplacementNamed(
-                    context, QuizGameplayScreen.routeName)),
+                onPress: () {
+                  context.read<GameplayProvider>().isAnswerPressed = false;
+                  Navigator.pushReplacementNamed(
+                      context, QuizGameplayScreen.routeName);
+                }),
             const Spacer(),
           ],
         ),

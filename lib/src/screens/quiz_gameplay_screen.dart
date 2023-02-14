@@ -1,6 +1,7 @@
 import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/widgets/answer_button.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/image_widget.dart';
@@ -12,12 +13,12 @@ import 'package:provider/provider.dart';
 class QuizGameplayScreen extends StatelessWidget {
   static const routeName = '/QuizGameplayScreen';
 
-  final Quiz quiz;
-  const QuizGameplayScreen({Key? key, required this.quiz}) : super(key: key);
+  const QuizGameplayScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
+    final provider = context.read<GameplayProvider>();
 
     return BaseScaffold(
       body: Padding(
@@ -26,7 +27,12 @@ class QuizGameplayScreen extends StatelessWidget {
           children: [
             const ScoreBar(),
             const SizedBox(height: 10),
-            const TimerWidget(),
+            CountDownTimer(
+              whenTimeExpires: () {
+                Navigator.pushReplacementNamed(
+                    context, ExtraLifeScreen.routeName);
+              },
+            ),
             const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
@@ -46,8 +52,8 @@ class QuizGameplayScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     ButtonListView(
-                      options: quiz.options,
-                      correctIndex: quiz.correctIndex,
+                      options: provider.quiz?.options ?? [],
+                      correctIndex: provider.quiz?.correctIndex ?? 0,
                     ),
                     const SizedBox(height: 100),
                   ],
@@ -61,15 +67,17 @@ class QuizGameplayScreen extends StatelessWidget {
   }
 
   Widget getQuestion(BuildContext context) {
-    if (quiz.questionType == QuizQuestionType.text) {
+    final provider = context.read<GameplayProvider>();
+
+    if (provider.quiz?.questionType == QuizQuestionType.text) {
       final theme = Theme.of(context);
       return Text(
-        quiz.question,
+        provider.quiz?.question ?? '',
         style: theme.textTheme.titleMedium,
       );
     } else {
       return ImageWidget(
-        imgPath: quiz.question,
+        imgPath: provider.quiz?.question ?? '',
         fit: BoxFit.contain,
       );
     }
@@ -91,7 +99,7 @@ class ButtonListView extends StatelessWidget {
       children: options
           .map((e) => AnswerButton(
                 title: e,
-                onTapAnswer: provider.onTapAnswer,
+                onTapAnswer: () => provider.onTapAnswer(context, e),
                 correctAnswer: options[correctIndex],
               ))
           .toList(),
