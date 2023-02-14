@@ -36,7 +36,6 @@ class LevelProgressDialog extends StatelessWidget {
                     border: Border.all(color: Colors.orange.shade300, width: 8),
                   ),
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const SizedBox(height: 40),
                       Row(
@@ -58,13 +57,14 @@ class LevelProgressDialog extends StatelessWidget {
                       ),
                       const SizedBox(height: 20),
                       Wrap(
-                        spacing: 10,
+                        spacing: 5,
                         children: quizzes.mapIndexed((i, e) {
                           String img = 'assets/images/ques_mark.png';
                           if (completedCount != null && completedCount! <= i) {
                             img = 'assets/images/done.png';
                           }
-                          return CategoryContainer(img: img);
+                          return SizedBox(
+                              width: 100, child: CategoryContainer(img: img));
                         }).toList(),
                       ),
                       const SizedBox(height: 20),

@@ -3,15 +3,11 @@ import 'package:flutter/material.dart';
 
 class ImageWidget extends StatelessWidget {
   final String imgPath;
-  final BoxFit fit;
+  final BoxFit? fit;
   final double? width;
   final double? height;
   const ImageWidget(
-      {Key? key,
-      required this.imgPath,
-      required this.fit,
-      this.width,
-      this.height})
+      {Key? key, required this.imgPath, this.fit, this.width, this.height})
       : super(key: key);
 
   @override

@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:flutter/material.dart';
 
 class CategoryContainer extends StatelessWidget {
@@ -41,8 +42,8 @@ class CategoryContainer extends StatelessWidget {
               border:
                   Border.all(color: theme.colorScheme.inversePrimary, width: 1),
             ),
-            child: Image(
-              image: AssetImage(img),
+            child: ImageWidget(
+              imgPath: img,
               width: 50,
               height: 50,
             ),

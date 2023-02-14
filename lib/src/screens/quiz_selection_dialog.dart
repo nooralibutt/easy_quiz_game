@@ -1,5 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
-import 'package:easy_quiz_game/src/screens/level_progress_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_progress_dialog.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
