@@ -1,11 +1,13 @@
 import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/answer_button.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/score_bar.dart';
 import 'package:easy_quiz_game/src/widgets/timer_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizGameplayScreen extends StatelessWidget {
   static const routeName = '/QuizGameplayScreen';
@@ -43,12 +45,10 @@ class QuizGameplayScreen extends StatelessWidget {
                       child: getQuestion(context),
                     ),
                     const SizedBox(height: 20),
-                    ...quiz.options
-                        .map((e) => AnswerButton(
-                              title: e,
-                              onTapAnswer: () {},
-                            ))
-                        .toList(),
+                    ButtonListView(
+                      options: quiz.options,
+                      correctIndex: quiz.correctIndex,
+                    ),
                     const SizedBox(height: 100),
                   ],
                 ),
@@ -73,5 +73,28 @@ class QuizGameplayScreen extends StatelessWidget {
         fit: BoxFit.contain,
       );
     }
+  }
+}
+
+class ButtonListView extends StatelessWidget {
+  final List<String> options;
+  final int correctIndex;
+  const ButtonListView(
+      {Key? key, required this.options, required this.correctIndex})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.read<GameplayProvider>();
+
+    return Column(
+      children: options
+          .map((e) => AnswerButton(
+                title: e,
+                onTapAnswer: provider.onTapAnswer,
+                correctAnswer: options[correctIndex],
+              ))
+          .toList(),
+    );
   }
 }
