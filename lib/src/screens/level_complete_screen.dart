@@ -52,6 +52,9 @@ class LevelCompleteScreen extends StatelessWidget {
                   context.read<GameplayProvider>().earnReward();
                   Navigator.popUntil(context, (route) => route.isFirst);
                 }),
+            Badge(
+                label: Text('AD', style: Theme.of(context).textTheme.bodySmall),
+                child: FramedButton(title: 'Collect 2x', onPress: () {})),
             const Spacer(),
           ],
         ),

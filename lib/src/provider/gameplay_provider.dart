@@ -8,9 +8,10 @@ import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
 import 'package:flutter/material.dart';
 
 class GameplayProvider with ChangeNotifier {
-  QuizCategory? quizCategory;
-  List<Quiz>? quizzes;
-  Quiz? quiz;
+  List<QuizCategory>? quizCategories;
+  QuizCategory? selectedQuizCategory;
+  List<Quiz>? categoryQuizzes;
+  Quiz? selectedQuiz;
   int completedCount = 0;
   bool isAnswerPressed = false;
   int coins = 0;
@@ -20,16 +21,22 @@ class GameplayProvider with ChangeNotifier {
       : coins = Prefs.instance.getCoins(),
         diamonds = Prefs.instance.getDiamonds();
 
+  void getQuizCategories(List<QuizCategory> categories) {
+    categories.shuffle();
+    quizCategories = categories.take(3).toList();
+    notifyListeners();
+  }
+
   void onSelectQuizCategory(BuildContext context, QuizCategory e) {
     e.quizzes.shuffle();
-    quizzes = e.quizzes.take(3).toList();
+    categoryQuizzes = e.quizzes.take(3).toList();
     Navigator.of(context)
         .pushReplacement(FullScreenModal(body: const LevelProgressDialog()));
   }
 
   void onNextQuestion(BuildContext context) {
     isAnswerPressed = false;
-    quiz = quizzes?[completedCount];
+    selectedQuiz = categoryQuizzes?[completedCount];
     Navigator.pushReplacementNamed(context, QuizGameplayScreen.routeName);
   }
 
@@ -38,7 +45,7 @@ class GameplayProvider with ChangeNotifier {
     isAnswerPressed = true;
     notifyListeners();
 
-    final currentQuiz = quizzes?[completedCount];
+    final currentQuiz = categoryQuizzes?[completedCount];
     final correctAnswer = currentQuiz?.options[currentQuiz.correctIndex];
     if (selectedAnswer != correctAnswer) {
       Future.delayed(
@@ -47,7 +54,7 @@ class GameplayProvider with ChangeNotifier {
               context, ExtraLifeScreen.routeName));
     } else {
       completedCount++;
-      if (completedCount < quizzes!.length) {
+      if (completedCount < categoryQuizzes!.length) {
         Future.delayed(
             duration,
             () => Navigator.of(context).pushReplacement(

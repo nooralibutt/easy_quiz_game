@@ -13,8 +13,6 @@ class QuizSelectionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
     final theme = Theme.of(context);
-    controller.quizCategories.shuffle();
-    final quizCategories = controller.quizCategories.take(3).toList();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -42,40 +40,36 @@ class QuizSelectionScreen extends StatelessWidget {
                         style: theme.textTheme.titleLarge,
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        children: quizCategories
-                            .map((e) => Expanded(
-                                  child: InkWell(
-                                    onTap: () => context
-                                        .read<GameplayProvider>()
-                                        .onSelectQuizCategory(context, e),
-                                    child: CategoryContainer(
-                                      title: e.name.toUpperCase(),
-                                      img: e.iconImage,
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
+                      Consumer<GameplayProvider>(
+                        builder: (_, provider, __) {
+                          return Row(
+                            children: provider.quizCategories
+                                    ?.map((e) => Expanded(
+                                          child: InkWell(
+                                            onTap: () => context
+                                                .read<GameplayProvider>()
+                                                .onSelectQuizCategory(
+                                                    context, e),
+                                            child: CategoryContainer(
+                                              title: e.name.toUpperCase(),
+                                              img: e.iconImage,
+                                            ),
+                                          ),
+                                        ))
+                                    .toList() ??
+                                [],
+                          );
+                        },
                       ),
                       const SizedBox(height: 20),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Expanded(
-                            child: FramedButton(
-                              buttonPath: controller.buttonPath,
-                              title: 'ROLL FREE',
-                              onPress: () {},
-                            ),
-                          ),
-                          Expanded(
-                            child: FramedButton(
-                              buttonPath: controller.buttonPath,
-                              title: 'ROLL',
-                              onPress: () {},
-                            ),
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 40),
+                        child: FramedButton(
+                          buttonPath: controller.buttonPath,
+                          title: 'ROLL FREE',
+                          onPress: () => context.read<GameplayProvider>()
+                              .getQuizCategories(controller.quizCategories),
+                        ),
                       ),
                       FramedButton(
                         buttonPath: controller.buttonPath,

@@ -55,7 +55,7 @@ class LevelProgressDialog extends StatelessWidget {
                       const SizedBox(height: 20),
                       Wrap(
                         spacing: 5,
-                        children: provider.quizzes?.mapIndexed((i, e) {
+                        children: provider.categoryQuizzes?.mapIndexed((i, e) {
                               String img = 'assets/images/ques_mark.png';
                               if (i < provider.completedCount) {
                                 img = 'assets/images/done.png';
