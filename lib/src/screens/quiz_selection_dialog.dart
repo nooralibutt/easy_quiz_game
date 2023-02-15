@@ -1,10 +1,10 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
-import 'package:easy_quiz_game/src/screens/level_progress_dialog.dart';
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
-import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class QuizSelectionScreen extends StatelessWidget {
   const QuizSelectionScreen({Key? key}) : super(key: key);
@@ -46,16 +46,9 @@ class QuizSelectionScreen extends StatelessWidget {
                         children: quizCategories
                             .map((e) => Expanded(
                                   child: InkWell(
-                                    onTap: () {
-                                      e.quizzes.shuffle();
-                                      final selectedQuizzes =
-                                          e.quizzes.take(3).toList();
-                                      Navigator.of(context)
-                                          .pushReplacement(FullScreenModal(
-                                        body: LevelProgressDialog(
-                                            quizzes: selectedQuizzes),
-                                      ));
-                                    },
+                                    onTap: () => context
+                                        .read<GameplayProvider>()
+                                        .onSelectQuizCategory(context, e),
                                     child: CategoryContainer(
                                       title: e.name.toUpperCase(),
                                       img: e.iconImage,

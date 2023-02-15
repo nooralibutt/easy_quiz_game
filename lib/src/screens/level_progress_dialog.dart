@@ -1,22 +1,19 @@
 import 'package:collection/collection.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
-import 'package:easy_quiz_game/src/models/quiz_category.dart';
-import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LevelProgressDialog extends StatelessWidget {
-  final List<Quiz> quizzes;
-  final int? completedCount;
-  const LevelProgressDialog(
-      {Key? key, required this.quizzes, this.completedCount})
-      : super(key: key);
+  const LevelProgressDialog({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
+    final provider = context.read<GameplayProvider>();
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -58,29 +55,22 @@ class LevelProgressDialog extends StatelessWidget {
                       const SizedBox(height: 20),
                       Wrap(
                         spacing: 5,
-                        children: quizzes.mapIndexed((i, e) {
-                          String img = 'assets/images/ques_mark.png';
-                          if (completedCount != null && completedCount! <= i) {
-                            img = 'assets/images/done.png';
-                          }
-                          return SizedBox(
-                              width: 100, child: CategoryContainer(img: img));
-                        }).toList(),
+                        children: provider.quizzes?.mapIndexed((i, e) {
+                              String img = 'assets/images/ques_mark.png';
+                              if (i < provider.completedCount) {
+                                img = 'assets/images/done.png';
+                              }
+                              return SizedBox(
+                                  width: 100,
+                                  child: CategoryContainer(img: img));
+                            }).toList() ??
+                            [],
                       ),
                       const SizedBox(height: 20),
                       FramedButton(
                         buttonPath: controller.buttonPath,
                         title: 'Next',
-                        onPress: () {
-                          int questionNumber = 0;
-                          if (completedCount != null) {
-                            questionNumber = completedCount!;
-                          }
-
-                          Navigator.pushReplacementNamed(
-                              context, QuizGameplayScreen.routeName,
-                              arguments: quizzes[questionNumber]);
-                        },
+                        onPress: () => provider.onNextQuestion(context),
                       ),
                     ],
                   ),
