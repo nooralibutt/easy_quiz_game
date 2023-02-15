@@ -75,4 +75,10 @@ class GameplayProvider with ChangeNotifier {
     Prefs.instance.updateCoins(coins);
     notifyListeners();
   }
+
+  void deductPlayCost() {
+    coins -= 10;
+    Prefs.instance.updateCoins(coins);
+    notifyListeners();
+  }
 }

@@ -31,9 +31,9 @@ class MenuScreen extends StatelessWidget {
               buttonPath: controller.buttonPath,
               title: 'Play',
               onPress: () {
-                context
-                    .read<GameplayProvider>()
-                    .getQuizCategories(controller.quizCategories);
+                final provider = context.read<GameplayProvider>();
+                provider.getQuizCategories(controller.quizCategories);
+                provider.deductPlayCost();
                 Navigator.of(context)
                     .push(FullScreenModal(body: const QuizSelectionScreen()));
               },
