@@ -1,6 +1,7 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
@@ -56,7 +57,7 @@ class EasyQuizGameApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return EasyQuizGameController(
+    final child = EasyQuizGameController(
       menuLogoPath: menuLogoPath,
       placementBuilder: placementBuilder,
       onTapEvent: onTapEvent,
@@ -79,7 +80,7 @@ class EasyQuizGameApp extends StatelessWidget {
               case MenuScreen.routeName:
                 return _generatePage(const MenuScreen());
               case QuizGameplayScreen.routeName:
-                return _generatePage(QuizGameplayScreen());
+                return _generatePage(const QuizGameplayScreen());
               case ExtraLifeScreen.routeName:
                 return _generatePage(const ExtraLifeScreen());
               case LevelCompleteScreen.routeName:
@@ -89,6 +90,16 @@ class EasyQuizGameApp extends StatelessWidget {
           },
         ),
       ),
+    );
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          return child;
+        }
+
+        return const Center(child: CircularProgressIndicator.adaptive());
+      },
+      future: Prefs.instance.init(),
     );
   }
 

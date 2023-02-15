@@ -1,5 +1,7 @@
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/my_icon_button.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ScoreBar extends StatelessWidget {
   const ScoreBar({Key? key}) : super(key: key);
@@ -16,10 +18,15 @@ class ScoreBar extends StatelessWidget {
           MyIconButton(onPress: () {}, icon: Icons.menu),
         const SizedBox(width: 10),
         Expanded(
-          child: ScoreContainer(
-            leadingImg: 'assets/images/coin.png',
-            score: '100',
-            onPress: () {},
+          child: Selector<GameplayProvider, int>(
+            selector: (_, provider) => provider.coins,
+            builder: (_, coins, __) {
+              return ScoreContainer(
+                leadingImg: 'assets/images/coin.png',
+                score: coins.toString(),
+                onPress: () {},
+              );
+            },
           ),
         ),
         const SizedBox(width: 10),
@@ -29,10 +36,15 @@ class ScoreBar extends StatelessWidget {
         ),
         const SizedBox(width: 10),
         Expanded(
-          child: ScoreContainer(
-            leadingImg: 'assets/images/diamond.png',
-            score: '20',
-            onPress: () {},
+          child: Selector<GameplayProvider, int>(
+            selector: (_, provider) => provider.diamonds,
+            builder: (_, diamonds, __) {
+              return ScoreContainer(
+                leadingImg: 'assets/images/diamond.png',
+                score: diamonds.toString(),
+                onPress: () {},
+              );
+            },
           ),
         ),
         const SizedBox(width: 10),
@@ -46,6 +58,7 @@ class ScoreContainer extends StatelessWidget {
   final String leadingImg;
   final String score;
   final VoidCallback onPress;
+
   const ScoreContainer({
     super.key,
     required this.leadingImg,

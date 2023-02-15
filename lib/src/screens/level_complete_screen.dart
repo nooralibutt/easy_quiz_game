@@ -1,7 +1,9 @@
+import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LevelCompleteScreen extends StatelessWidget {
   static const routeName = '/LevelCompleteScreen';
@@ -44,7 +46,12 @@ class LevelCompleteScreen extends StatelessWidget {
               ],
             ),
             const Spacer(),
-            FramedButton(title: 'Collect', onPress: () {}),
+            FramedButton(
+                title: 'Collect',
+                onPress: () {
+                  context.read<GameplayProvider>().earnReward();
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }),
             const Spacer(),
           ],
         ),
