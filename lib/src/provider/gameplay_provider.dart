@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/models/quiz_category.dart';
+import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
@@ -26,10 +27,12 @@ class GameplayProvider with ChangeNotifier {
   void getQuizCategories(List<QuizCategory> categories) {
     categories.shuffle();
     quizCategories = categories.take(3).toList();
+    MyAudioPlayer.instance.playButtonTap();
     notifyListeners();
   }
 
   void onSelectQuizCategory(BuildContext context, QuizCategory e) {
+    MyAudioPlayer.instance.playButtonTap();
     isAnswerPressed = false;
     completedCount = 0;
     e.quizzes.shuffle();
@@ -39,6 +42,7 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void onNextQuestion(BuildContext context) {
+    MyAudioPlayer.instance.playButtonTap();
     isAnswerPressed = false;
     selectedQuiz = categoryQuizzes?[completedCount];
     Navigator.pushReplacementNamed(context, QuizGameplayScreen.routeName);
@@ -56,11 +60,13 @@ class GameplayProvider with ChangeNotifier {
     } else {
       completedCount++;
       if (completedCount < categoryQuizzes!.length) {
+        MyAudioPlayer.instance.playCorrectAnswer();
         Future.delayed(
             duration,
             () => Navigator.of(context).pushReplacement(
                 FullScreenModal(body: const LevelProgressDialog())));
       } else {
+        MyAudioPlayer.instance.playWrongAnswer();
         Future.delayed(
             duration,
             () => Navigator.pushReplacementNamed(
@@ -87,6 +93,7 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void unlockWithDiamond(BuildContext context, String categoryNameToUnlock) {
+    MyAudioPlayer.instance.playButtonTap();
     if (diamonds <= 0) {
       Navigator.of(context).pushReplacement(
         FullScreenModal(
@@ -116,6 +123,8 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void buyCoins(BuildContext context, int coins, int gems) {
+    MyAudioPlayer.instance.playButtonTap();
+
     if (diamonds <= 0 || diamonds < gems) {
       Navigator.of(context).pushReplacement(
         FullScreenModal(
@@ -146,6 +155,8 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void levelEnd(BuildContext context) {
+    MyAudioPlayer.instance.playLevelFailed();
+
     const duration = Duration(seconds: 1);
     final currentTime = DateTime.now();
     final lastLifeUsedTime = Prefs.instance.getLastLifeUsedTime();
@@ -163,6 +174,7 @@ class GameplayProvider with ChangeNotifier {
   }
 
   continueOnLevelFailed(BuildContext context) {
+    MyAudioPlayer.instance.playButtonTap();
     isAnswerPressed = false;
     if (diamonds <= 0 || diamonds < 50) {
       Navigator.of(context).pushReplacement(

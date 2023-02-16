@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
@@ -34,8 +35,10 @@ class LevelFailedScreen extends StatelessWidget {
             const Spacer(),
             FramedButton(
                 title: 'END QUIZ',
-                onPress: () =>
-                    Navigator.popUntil(context, (route) => route.isFirst)),
+                onPress: () {
+                  MyAudioPlayer.instance.playButtonTap();
+                  Navigator.popUntil(context, (route) => route.isFirst);
+                }),
             Badge(
                 label: Row(
                   children: [

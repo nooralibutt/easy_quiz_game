@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
 
@@ -43,7 +44,10 @@ class DialogFrame extends StatelessWidget {
               right: 10,
               top: 20,
               child: InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  MyAudioPlayer.instance.playButtonTap();
+                  Navigator.pop(context);
+                },
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
