@@ -56,8 +56,6 @@ class ScoreBar extends StatelessWidget {
   void _buyCoins(BuildContext context) {
     final provider = context.read<GameplayProvider>();
     const img = 'assets/images/coin.png';
-    const coins = 100;
-    const gems = 5;
     Navigator.of(context).push(
       FullScreenModal(
         body: DialogFrame(
@@ -77,34 +75,39 @@ class ScoreBar extends StatelessWidget {
                 color: Colors.orange.shade300,
                 tiles: List.generate(
                   3,
-                  (index) => ListTile(
-                    contentPadding: const EdgeInsets.all(10),
-                    leading: const ImageWidget(imgPath: img),
-                    title: Text('${coins * (index + 1)}'),
-                    trailing: TextButton(
-                      onPressed: () => provider.buyCoins(context, coins, gems),
-                      child: Column(
-                        children: [
-                          Expanded(
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text('-${gems * (index + 1)} '),
-                                const Image(
-                                  image:
-                                      AssetImage('assets/images/diamond.png'),
-                                ),
-                              ],
+                  (index) {
+                    final coins = 100 * (index + 1);
+                    final gems = 5 * (index + 1);
+                    return ListTile(
+                      contentPadding: const EdgeInsets.all(10),
+                      leading: const ImageWidget(imgPath: img),
+                      title: Text('$coins'),
+                      trailing: TextButton(
+                        onPressed: () =>
+                            provider.buyCoins(context, coins, gems),
+                        child: Column(
+                          children: [
+                            Expanded(
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text('-$gems '),
+                                  const Image(
+                                    image:
+                                        AssetImage('assets/images/diamond.png'),
+                                  ),
+                                ],
+                              ),
                             ),
-                          ),
-                          Text(
-                            'Buy',
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ],
+                            Text(
+                              'Buy',
+                              style: Theme.of(context).textTheme.titleLarge,
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ),
+                    );
+                  },
                 ),
               ),
             ],
