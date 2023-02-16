@@ -2,6 +2,7 @@ import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_failed_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_progress_dialog.dart';
 import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
 import 'package:easy_quiz_game/src/widgets/dialog_frame.dart';
@@ -51,10 +52,7 @@ class GameplayProvider with ChangeNotifier {
     final currentQuiz = categoryQuizzes?[completedCount];
     final correctAnswer = currentQuiz?.options[currentQuiz.correctIndex];
     if (selectedAnswer != correctAnswer) {
-      Future.delayed(
-          duration,
-          () => Navigator.pushReplacementNamed(
-              context, ExtraLifeScreen.routeName));
+      levelEnd(context);
     } else {
       completedCount++;
       if (completedCount < categoryQuizzes!.length) {
@@ -72,8 +70,8 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void earnReward() {
-    diamonds += 5;
-    coins += 20;
+    diamonds += 50;
+    coins += 200;
     Prefs.instance.updateDiamonds(diamonds);
     Prefs.instance.updateCoins(coins);
     notifyListeners();
@@ -108,13 +106,13 @@ class GameplayProvider with ChangeNotifier {
           ),
         ),
       );
-      return;
+    } else {
+      diamonds -= 20;
+      Prefs.instance.updateDiamonds(diamonds);
+      Prefs.instance.unlockedCategory(categoryNameToUnlock);
+      Navigator.pop(context);
+      notifyListeners();
     }
-    diamonds -= 20;
-    Prefs.instance.updateDiamonds(diamonds);
-    Prefs.instance.unlockedCategory(categoryNameToUnlock);
-    Navigator.pop(context);
-    notifyListeners();
   }
 
   void buyCoins(BuildContext context, int coins, int gems) {
@@ -137,13 +135,56 @@ class GameplayProvider with ChangeNotifier {
           ),
         ),
       );
-      return;
+    } else {
+      diamonds -= gems;
+      this.coins += coins;
+      Prefs.instance.updateDiamonds(diamonds);
+      Prefs.instance.updateCoins(this.coins);
+      Navigator.pop(context);
+      notifyListeners();
     }
-    diamonds -= gems;
-    coins += 20;
-    Prefs.instance.updateDiamonds(diamonds);
-    Prefs.instance.updateCoins(coins);
-    Navigator.pop(context);
-    notifyListeners();
+  }
+
+  void levelEnd(BuildContext context) {
+    const duration = Duration(seconds: 1);
+    final currentTime = DateTime.now();
+    final lastLifeUsedTime = Prefs.instance.getLastLifeUsedTime();
+    if (currentTime.difference(lastLifeUsedTime).inMinutes >= 5) {
+      Future.delayed(
+          duration,
+          () => Navigator.pushReplacementNamed(
+              context, ExtraLifeScreen.routeName));
+    } else {
+      Future.delayed(
+          duration,
+          () => Navigator.pushReplacementNamed(
+              context, LevelFailedScreen.routeName));
+    }
+  }
+
+  continueOnLevelFailed(BuildContext context) {
+    isAnswerPressed = false;
+    if (diamonds <= 0 || diamonds < 50) {
+      Navigator.of(context).pushReplacement(
+        FullScreenModal(
+          body: DialogFrame(
+            title: 'Sorry',
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'Sorry you do not have enough gems. Please Try Later !!!',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+    } else {
+      Navigator.pushReplacementNamed(context, QuizGameplayScreen.routeName);
+    }
   }
 }

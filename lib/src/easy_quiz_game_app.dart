@@ -5,6 +5,7 @@ import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/all_quiz_categories_screen.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
+import 'package:easy_quiz_game/src/screens/level_failed_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -88,6 +89,8 @@ class EasyQuizGameApp extends StatelessWidget {
                 return _generatePage(const LevelCompleteScreen());
               case AllQuizCategoriesScreen.routeName:
                 return _generatePage(const AllQuizCategoriesScreen());
+              case LevelFailedScreen.routeName:
+                return _generatePage(const LevelFailedScreen());
             }
             return null;
           },
