@@ -26,7 +26,12 @@ class CategoryContainer extends StatelessWidget {
             FittedBox(
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 10),
-                child: Text(title!),
+                child: Text(
+                  title!,
+                  textAlign: TextAlign.center,
+                  style: theme.textTheme.bodyLarge!
+                      .copyWith(fontWeight: FontWeight.bold),
+                ),
               ),
             ),
           Container(
@@ -44,8 +49,8 @@ class CategoryContainer extends StatelessWidget {
             ),
             child: ImageWidget(
               imgPath: img,
-              width: 50,
-              height: 50,
+              width: 100,
+              height: 100,
             ),
           ),
         ],

@@ -1,5 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/screens/all_quiz_categories_screen.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
@@ -15,7 +16,7 @@ class QuizSelectionScreen extends StatelessWidget {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 30),
+      padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Center(
         child: Stack(
           children: [
@@ -25,7 +26,7 @@ class QuizSelectionScreen extends StatelessWidget {
                 const SizedBox(height: 30),
                 Container(
                   width: double.infinity,
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(5),
                   decoration: BoxDecoration(
                     gradient: controller.gradient,
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
@@ -37,7 +38,8 @@ class QuizSelectionScreen extends StatelessWidget {
                       const SizedBox(height: 40),
                       Text(
                         'Tap to Choose a Category',
-                        style: theme.textTheme.titleLarge,
+                        style: theme.textTheme.titleLarge!
+                            .copyWith(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(height: 20),
                       Consumer<GameplayProvider>(
@@ -67,14 +69,16 @@ class QuizSelectionScreen extends StatelessWidget {
                         child: FramedButton(
                           buttonPath: controller.buttonPath,
                           title: 'ROLL FREE',
-                          onPress: () => context.read<GameplayProvider>()
+                          onPress: () => context
+                              .read<GameplayProvider>()
                               .getQuizCategories(controller.quizCategories),
                         ),
                       ),
                       FramedButton(
                         buttonPath: controller.buttonPath,
                         title: 'PLAY FOR UNLOCK',
-                        onPress: () {},
+                        onPress: () => Navigator.pushReplacementNamed(
+                            context, AllQuizCategoriesScreen.routeName),
                       ),
                     ],
                   ),

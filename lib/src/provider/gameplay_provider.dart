@@ -4,6 +4,7 @@ import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_progress_dialog.dart';
 import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
+import 'package:easy_quiz_game/src/widgets/dialog_frame.dart';
 import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
 import 'package:flutter/material.dart';
 
@@ -28,6 +29,8 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void onSelectQuizCategory(BuildContext context, QuizCategory e) {
+    isAnswerPressed = false;
+    completedCount = 0;
     e.quizzes.shuffle();
     categoryQuizzes = e.quizzes.take(3).toList();
     Navigator.of(context)
@@ -77,8 +80,70 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void deductPlayCost() {
+    if (coins <= 0) {
+      return;
+    }
     coins -= 10;
     Prefs.instance.updateCoins(coins);
+    notifyListeners();
+  }
+
+  void unlockWithDiamond(BuildContext context, String categoryNameToUnlock) {
+    if (diamonds <= 0) {
+      Navigator.of(context).pushReplacement(
+        FullScreenModal(
+          body: DialogFrame(
+            title: 'Sorry',
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'Sorry you do not have enough gems. Please Try Later !!!',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+    diamonds -= 20;
+    Prefs.instance.updateDiamonds(diamonds);
+    Prefs.instance.unlockedCategory(categoryNameToUnlock);
+    Navigator.pop(context);
+    notifyListeners();
+  }
+
+  void buyCoins(BuildContext context, int coins, int gems) {
+    if (diamonds <= 0 || diamonds < gems) {
+      Navigator.of(context).pushReplacement(
+        FullScreenModal(
+          body: DialogFrame(
+            title: 'Sorry',
+            body: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(height: 20),
+                Text(
+                  'Sorry you do not have enough gems. Please Try Later !!!',
+                  textAlign: TextAlign.center,
+                  style: Theme.of(context).textTheme.titleLarge,
+                )
+              ],
+            ),
+          ),
+        ),
+      );
+      return;
+    }
+    diamonds -= gems;
+    coins += 20;
+    Prefs.instance.updateDiamonds(diamonds);
+    Prefs.instance.updateCoins(coins);
+    Navigator.pop(context);
     notifyListeners();
   }
 }

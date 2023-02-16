@@ -18,4 +18,7 @@ class Prefs {
 
   int getDiamonds() => _prefs.getInt(_diamonds) ?? 0;
   void updateDiamonds(int reward) => _prefs.setInt(_diamonds, reward);
+
+  bool isCategoryLocked(String name) => _prefs.getBool(name) ?? true;
+  void unlockedCategory(String name) => _prefs.setBool(name, false);
 }

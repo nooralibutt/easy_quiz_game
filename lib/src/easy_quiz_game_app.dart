@@ -2,6 +2,7 @@ import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
+import 'package:easy_quiz_game/src/screens/all_quiz_categories_screen.dart';
 import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/screens/level_complete_screen.dart';
 import 'package:easy_quiz_game/src/screens/menu_screen.dart';
@@ -85,6 +86,8 @@ class EasyQuizGameApp extends StatelessWidget {
                 return _generatePage(const ExtraLifeScreen());
               case LevelCompleteScreen.routeName:
                 return _generatePage(const LevelCompleteScreen());
+              case AllQuizCategoriesScreen.routeName:
+                return _generatePage(const AllQuizCategoriesScreen());
             }
             return null;
           },

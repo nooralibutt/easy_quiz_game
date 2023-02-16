@@ -1,8 +1,8 @@
 import 'package:collection/collection.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
-import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
+import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,6 +14,21 @@ class LevelProgressDialog extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = EasyQuizGameController.of(context);
     final provider = context.read<GameplayProvider>();
+    final questionList = provider.categoryQuizzes?.mapIndexed((i, e) {
+          String img = 'assets/images/ques_mark.png';
+          if (i < provider.completedCount) {
+            img = 'assets/images/done.png';
+          }
+          return ListTile(
+            title: ImageWidget(
+              imgPath: img,
+              width: 50,
+              height: 80,
+              fit: BoxFit.fitHeight,
+            ),
+          );
+        }).toList() ??
+        [];
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30),
@@ -53,19 +68,7 @@ class LevelProgressDialog extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      Wrap(
-                        spacing: 5,
-                        children: provider.categoryQuizzes?.mapIndexed((i, e) {
-                              String img = 'assets/images/ques_mark.png';
-                              if (i < provider.completedCount) {
-                                img = 'assets/images/done.png';
-                              }
-                              return SizedBox(
-                                  width: 100,
-                                  child: CategoryContainer(img: img));
-                            }).toList() ??
-                            [],
-                      ),
+                      Column(children: List.from(questionList.reversed)),
                       const SizedBox(height: 20),
                       FramedButton(
                         buttonPath: controller.buttonPath,

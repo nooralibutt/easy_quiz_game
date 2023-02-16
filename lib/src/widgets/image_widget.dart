@@ -25,9 +25,9 @@ class ImageWidget extends StatelessWidget {
 
     return Image(
       image: AssetImage(imgPath),
-      fit: BoxFit.cover,
-      // width: double.infinity,
-      // height: double.infinity,
+      fit: fit,
+      width: width,
+      height: height,
       loadingBuilder: (BuildContext context, Widget child,
           ImageChunkEvent? loadingProgress) {
         if (loadingProgress == null) return child;
