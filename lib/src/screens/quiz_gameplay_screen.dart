@@ -52,8 +52,8 @@ class QuizGameplayScreen extends StatelessWidget {
                     ),
                     const SizedBox(height: 20),
                     ButtonListView(
-                      options: provider.quiz?.options ?? [],
-                      correctIndex: provider.quiz?.correctIndex ?? 0,
+                      options: provider.selectedQuiz?.options ?? [],
+                      correctIndex: provider.selectedQuiz?.correctIndex ?? 0,
                     ),
                     const SizedBox(height: 100),
                   ],
@@ -69,15 +69,15 @@ class QuizGameplayScreen extends StatelessWidget {
   Widget getQuestion(BuildContext context) {
     final provider = context.read<GameplayProvider>();
 
-    if (provider.quiz?.questionType == QuizQuestionType.text) {
+    if (provider.selectedQuiz?.questionType == QuizQuestionType.text) {
       final theme = Theme.of(context);
       return Text(
-        provider.quiz?.question ?? '',
+        provider.selectedQuiz?.question ?? '',
         style: theme.textTheme.titleMedium,
       );
     } else {
       return ImageWidget(
-        imgPath: provider.quiz?.question ?? '',
+        imgPath: provider.selectedQuiz?.question ?? '',
         fit: BoxFit.contain,
       );
     }

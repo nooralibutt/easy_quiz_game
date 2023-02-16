@@ -5,7 +5,7 @@ final data = [
     name: 'Animated Movies',
     description: 'This Quiz is About Animated Movies',
     iconImage: 'assets/images/animated movies.jpg',
-    difficulty: QuizDifficulty.medium,
+    difficulty: QuizDifficulty.beginner,
     quizzes: [
       Quiz(
           question:

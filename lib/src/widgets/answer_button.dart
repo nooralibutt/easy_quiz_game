@@ -23,8 +23,8 @@ class _AnswerButtonState extends State<AnswerButton> {
     return InkWell(
       onTap: widget.onTapAnswer,
       child: Selector<GameplayProvider, bool>(
-        selector: (context, provider) => provider.isAnswerPressed,
-        builder: (context, value, child) {
+        selector: (_, provider) => provider.isAnswerPressed,
+        builder: (_, value, __) {
           Color buttonColor = Colors.orange.shade300;
           if (value) {
             if (widget.title == widget.correctAnswer) {
