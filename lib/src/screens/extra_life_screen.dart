@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/quiz_gameplay_screen.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
@@ -36,9 +37,15 @@ class ExtraLifeScreen extends StatelessWidget {
                 title: 'USE EXTRA LIFE',
                 onPress: () {
                   context.read<GameplayProvider>().isAnswerPressed = false;
+                  Prefs.instance.setLastLifeUsedTime();
                   Navigator.pushReplacementNamed(
                       context, QuizGameplayScreen.routeName);
                 }),
+            const SizedBox(height: 10),
+            FramedButton(
+                title: 'END QUIZ',
+                onPress: () =>
+                    Navigator.popUntil(context, (route) => route.isFirst)),
             const Spacer(),
           ],
         ),

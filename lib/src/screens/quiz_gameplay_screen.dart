@@ -1,7 +1,6 @@
 import 'package:easy_quiz_game/easy_quiz_game.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
-import 'package:easy_quiz_game/src/screens/extra_life_screen.dart';
 import 'package:easy_quiz_game/src/widgets/answer_button.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/image_widget.dart';
@@ -27,12 +26,7 @@ class QuizGameplayScreen extends StatelessWidget {
           children: [
             const ScoreBar(),
             const SizedBox(height: 10),
-            CountDownTimer(
-              whenTimeExpires: () {
-                Navigator.pushReplacementNamed(
-                    context, ExtraLifeScreen.routeName);
-              },
-            ),
+            CountDownTimer(whenTimeExpires: () => provider.levelEnd(context)),
             const SizedBox(height: 10),
             Expanded(
               child: SingleChildScrollView(
