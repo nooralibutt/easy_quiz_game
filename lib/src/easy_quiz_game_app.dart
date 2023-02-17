@@ -1,5 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/models/quiz_category.dart';
+import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
 import 'package:easy_quiz_game/src/screens/all_quiz_categories_screen.dart';
@@ -105,8 +106,13 @@ class EasyQuizGameApp extends StatelessWidget {
 
         return const Center(child: CircularProgressIndicator.adaptive());
       },
-      future: Prefs.instance.init(),
+      future: loadEverything(),
     );
+  }
+
+  Future<void> loadEverything() async {
+    await Prefs.instance.init();
+    await AudioManager.instance.init();
   }
 
   static Route _generatePage(child) => MaterialPageRoute(builder: (_) => child);
