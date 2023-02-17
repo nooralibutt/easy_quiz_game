@@ -1,6 +1,12 @@
 enum QuizPlacement { menu }
 
-enum QuizEventAction { play }
+enum QuizEventAction {
+  play,
+  levelFailed,
+  levelComplete,
+  continueWithGems,
+  useExtraLife
+}
 
 enum QuizDifficulty { beginner, easy, medium, hard, expert }
 

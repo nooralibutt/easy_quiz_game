@@ -1,3 +1,5 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/enums.dart';
 import 'package:easy_quiz_game/src/models/quiz_category.dart';
 import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
@@ -170,10 +172,14 @@ class GameplayProvider with ChangeNotifier {
     }
   }
 
-  continueOnLevelFailed(BuildContext context) {
+  void continueOnLevelFailed(BuildContext context) {
+    EasyQuizGameController.of(context)
+        .onTapEvent
+        ?.call(context, QuizEventAction.continueWithGems);
+
     AudioManager.instance.playButtonTap();
     isAnswerPressed = false;
-    if (diamonds <= 0 || diamonds < 50) {
+    if (diamonds <= 0 || diamonds < 20) {
       Navigator.of(context).pushReplacement(
         FullScreenModal(
           body: DialogFrame(
@@ -193,7 +199,10 @@ class GameplayProvider with ChangeNotifier {
         ),
       );
     } else {
+      diamonds -= 20;
+      Prefs.instance.updateDiamonds(diamonds);
       Navigator.pushReplacementNamed(context, QuizGameplayScreen.routeName);
+      notifyListeners();
     }
   }
 }
