@@ -100,7 +100,8 @@ class ScoreBar extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text('-$gems '),
+                      Text('-$gems ',
+                          style: Theme.of(context).textTheme.bodyMedium),
                       const Image(
                           image: AssetImage('assets/images/diamond.png')),
                     ],

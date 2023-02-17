@@ -1,6 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
-import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/screens/quiz_selection_dialog.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
@@ -32,7 +32,7 @@ class MenuScreen extends StatelessWidget {
               onPress: () {
                 final provider = context.read<GameplayProvider>();
                 provider.getQuizCategories(controller.quizCategories);
-                MyAudioPlayer.instance.playCorrectAnswer();
+                AudioManager.instance.playCorrectAnswer();
                 provider.deductPlayCost();
                 Navigator.of(context)
                     .push(FullScreenModal(body: const QuizSelectionScreen()));

@@ -1,5 +1,5 @@
+import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
-import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
@@ -50,7 +50,7 @@ class LevelCompleteScreen extends StatelessWidget {
             FramedButton(
                 title: 'Collect',
                 onPress: () {
-                  MyAudioPlayer.instance.playButtonTap();
+                  AudioManager.instance.playButtonTap();
                   context.read<GameplayProvider>().earnReward();
                   Navigator.popUntil(context, (route) => route.isFirst);
                 }),

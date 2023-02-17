@@ -1,7 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
-import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
 import 'package:easy_quiz_game/src/widgets/image_widget.dart';
 import 'package:easy_quiz_game/src/widgets/label_header.dart';
@@ -92,7 +92,7 @@ class LevelProgressDialog extends StatelessWidget {
               top: 20,
               child: InkWell(
                 onTap: () {
-                  MyAudioPlayer.instance.playButtonTap();
+                  AudioManager.instance.playButtonTap();
                   Navigator.pop(context);
                 },
                 child: Container(
