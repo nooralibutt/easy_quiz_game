@@ -65,9 +65,8 @@ class AllQuizCategoriesScreen extends StatelessWidget {
                       FramedButton(
                         buttonPath: controller.buttonPath,
                         title: 'Unlock Category',
-                        onPress: () {
-                          provider.unlockWithDiamond(context, e.name);
-                        },
+                        onPress: () =>
+                            provider.unlockWithDiamond(context, e.name),
                       ),
                     ],
                   ),

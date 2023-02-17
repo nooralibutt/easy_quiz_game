@@ -14,10 +14,10 @@ class Prefs {
 
   Future<void> init() async => _prefs = await SharedPreferences.getInstance();
 
-  int getCoins() => _prefs.getInt(_coins) ?? 0;
+  int getCoins() => _prefs.getInt(_coins) ?? 200;
   void updateCoins(int reward) => _prefs.setInt(_coins, reward);
 
-  int getDiamonds() => _prefs.getInt(_diamonds) ?? 0;
+  int getDiamonds() => _prefs.getInt(_diamonds) ?? 50;
   void updateDiamonds(int reward) => _prefs.setInt(_diamonds, reward);
 
   bool isCategoryLocked(String name) => _prefs.getBool(name) ?? true;

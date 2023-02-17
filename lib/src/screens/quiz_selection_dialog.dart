@@ -1,5 +1,6 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
+import 'package:easy_quiz_game/src/provider/my_audio_player.dart';
 import 'package:easy_quiz_game/src/screens/all_quiz_categories_screen.dart';
 import 'package:easy_quiz_game/src/widgets/category_container.dart';
 import 'package:easy_quiz_game/src/widgets/framed_button.dart';
@@ -77,8 +78,11 @@ class QuizSelectionScreen extends StatelessWidget {
                       FramedButton(
                         buttonPath: controller.buttonPath,
                         title: 'PLAY FOR UNLOCK',
-                        onPress: () => Navigator.pushReplacementNamed(
-                            context, AllQuizCategoriesScreen.routeName),
+                        onPress: () {
+                          MyAudioPlayer.instance.playButtonTap();
+                          Navigator.pushReplacementNamed(
+                              context, AllQuizCategoriesScreen.routeName);
+                        },
                       ),
                     ],
                   ),
@@ -95,7 +99,10 @@ class QuizSelectionScreen extends StatelessWidget {
               right: 10,
               top: 20,
               child: InkWell(
-                onTap: () => Navigator.pop(context),
+                onTap: () {
+                  MyAudioPlayer.instance.playButtonTap();
+                  Navigator.pop(context);
+                },
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   decoration: const BoxDecoration(
