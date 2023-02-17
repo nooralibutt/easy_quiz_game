@@ -1,3 +1,5 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/enums.dart';
 import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/base_scaffold.dart';
@@ -15,6 +17,12 @@ class LevelFailedScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final provider = context.read<GameplayProvider>();
     final theme = Theme.of(context);
+    AudioManager.instance.playLevelFailed();
+    Future.delayed(
+        const Duration(seconds: 1),
+        () => EasyQuizGameController.of(context)
+            .onTapEvent
+            ?.call(context, QuizEventAction.levelFailed));
 
     return BaseScaffold(
       body: Padding(

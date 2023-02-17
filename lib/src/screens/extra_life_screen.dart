@@ -1,3 +1,5 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/enums.dart';
 import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/provider/prefs.dart';
@@ -14,6 +16,8 @@ class ExtraLifeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AudioManager.instance.playLevelFailed();
+
     return BaseScaffold(
       body: Padding(
         padding: const EdgeInsets.all(20),
@@ -37,6 +41,9 @@ class ExtraLifeScreen extends StatelessWidget {
             FramedButton(
                 title: 'USE EXTRA LIFE',
                 onPress: () {
+                  EasyQuizGameController.of(context)
+                      .onTapEvent
+                      ?.call(context, QuizEventAction.continueWithGems);
                   context.read<GameplayProvider>().isAnswerPressed = false;
                   Prefs.instance.setLastLifeUsedTime();
                   AudioManager.instance.playButtonTap();

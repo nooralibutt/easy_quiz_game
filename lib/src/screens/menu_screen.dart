@@ -1,4 +1,5 @@
 import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
+import 'package:easy_quiz_game/src/models/enums.dart';
 import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/screens/quiz_selection_dialog.dart';
@@ -30,6 +31,7 @@ class MenuScreen extends StatelessWidget {
               buttonPath: controller.buttonPath,
               title: 'Play',
               onPress: () {
+                controller.onTapEvent?.call(context, QuizEventAction.play);
                 final provider = context.read<GameplayProvider>();
                 provider.getQuizCategories(controller.quizCategories);
                 AudioManager.instance.playCorrectAnswer();
