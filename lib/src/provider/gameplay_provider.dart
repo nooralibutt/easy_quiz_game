@@ -27,7 +27,6 @@ class GameplayProvider with ChangeNotifier {
   void getQuizCategories(List<QuizCategory> categories) {
     categories.shuffle();
     quizCategories = categories.take(3).toList();
-    AudioManager.instance.playButtonTap();
     notifyListeners();
   }
 
@@ -56,17 +55,17 @@ class GameplayProvider with ChangeNotifier {
     final currentQuiz = categoryQuizzes?[completedCount];
     final correctAnswer = currentQuiz?.options[currentQuiz.correctIndex];
     if (selectedAnswer != correctAnswer) {
+      AudioManager.instance.playWrongAnswer();
       levelEnd(context);
     } else {
       completedCount++;
+      AudioManager.instance.playCorrectAnswer();
       if (completedCount < categoryQuizzes!.length) {
-        AudioManager.instance.playCorrectAnswer();
         Future.delayed(
             duration,
             () => Navigator.of(context).pushReplacement(
                 FullScreenModal(body: const LevelProgressDialog())));
       } else {
-        AudioManager.instance.playWrongAnswer();
         Future.delayed(
             duration,
             () => Navigator.pushReplacementNamed(
@@ -155,8 +154,6 @@ class GameplayProvider with ChangeNotifier {
   }
 
   void levelEnd(BuildContext context) {
-    AudioManager.instance.playLevelFailed();
-
     const duration = Duration(seconds: 1);
     final currentTime = DateTime.now();
     final lastLifeUsedTime = Prefs.instance.getLastLifeUsedTime();

@@ -13,6 +13,7 @@ class LevelCompleteScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AudioManager.instance.playLevelComplete();
     final theme = Theme.of(context);
     return BaseScaffold(
       body: Padding(

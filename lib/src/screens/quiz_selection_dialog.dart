@@ -70,9 +70,12 @@ class QuizSelectionScreen extends StatelessWidget {
                         child: FramedButton(
                           buttonPath: controller.buttonPath,
                           title: 'ROLL FREE',
-                          onPress: () => context
-                              .read<GameplayProvider>()
-                              .getQuizCategories(controller.quizCategories),
+                          onPress: () {
+                            AudioManager.instance.playButtonTap();
+                            context
+                                .read<GameplayProvider>()
+                                .getQuizCategories(controller.quizCategories);
+                          },
                         ),
                       ),
                       FramedButton(

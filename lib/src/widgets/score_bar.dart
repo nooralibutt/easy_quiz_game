@@ -1,3 +1,4 @@
+import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/dialog_frame.dart';
 import 'package:easy_quiz_game/src/widgets/full_screen_dialog.dart';
@@ -15,7 +16,10 @@ class ScoreBar extends StatelessWidget {
       children: [
         if (Navigator.canPop(context))
           MyIconButton(
-              onPress: () => Navigator.pop(context),
+              onPress: () {
+                AudioManager.instance.playButtonTap();
+                Navigator.pop(context);
+              },
               icon: Icons.arrow_back_ios_new_rounded),
         // Todo: else
         //   MyIconButton(onPress: () {}, icon: Icons.menu),
@@ -54,6 +58,8 @@ class ScoreBar extends StatelessWidget {
   }
 
   void _buyCoins(BuildContext context) {
+    AudioManager.instance.playButtonTap();
+
     Navigator.of(context).push(
       FullScreenModal(
         body: DialogFrame(
