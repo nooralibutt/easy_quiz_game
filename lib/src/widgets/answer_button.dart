@@ -1,3 +1,4 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -25,7 +26,7 @@ class _AnswerButtonState extends State<AnswerButton> {
       child: Selector<GameplayProvider, bool>(
         selector: (_, provider) => provider.isAnswerPressed,
         builder: (_, value, __) {
-          Color buttonColor = Colors.orange.shade300;
+          Color buttonColor = EasyQuizGameController.of(context).primaryColor;
           if (value) {
             if (widget.title == widget.correctAnswer) {
               buttonColor = Colors.green.shade700;

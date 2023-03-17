@@ -28,7 +28,9 @@ class DialogFrame extends StatelessWidget {
                   decoration: BoxDecoration(
                     gradient: controller.gradient,
                     borderRadius: const BorderRadius.all(Radius.circular(30)),
-                    border: Border.all(color: Colors.orange.shade300, width: 8),
+                    border: Border.all(
+                        color: EasyQuizGameController.of(context).primaryColor,
+                        width: 8),
                   ),
                   child: body,
                 ),

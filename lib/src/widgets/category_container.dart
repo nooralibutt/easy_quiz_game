@@ -41,7 +41,7 @@ class CategoryContainer extends StatelessWidget {
                 stops: const [0, 1],
                 begin: const Alignment(1, 1),
                 end: const Alignment(1, -1),
-                colors: [controller.primaryColor, controller.secondaryColor],
+                colors: controller.gradient.colors,
               ),
               borderRadius: const BorderRadius.all(Radius.circular(10)),
               border:
