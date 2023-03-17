@@ -1,3 +1,4 @@
+import 'package:easy_quiz_game/src/easy_quiz_game_controller.dart';
 import 'package:easy_quiz_game/src/provider/audio_manager.dart';
 import 'package:easy_quiz_game/src/provider/gameplay_provider.dart';
 import 'package:easy_quiz_game/src/widgets/dialog_frame.dart';
@@ -76,7 +77,7 @@ class ScoreBar extends StatelessWidget {
               const SizedBox(height: 20),
               ...ListTile.divideTiles(
                 context: context,
-                color: Colors.orange.shade300,
+                color: EasyQuizGameController.of(context).primaryColor,
                 tiles: _buildList(context),
               ),
             ],

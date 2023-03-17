@@ -51,7 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
   static Widget getGameWidget(BuildContext context) {
     return EasyQuizGameApp(
       quizCategories: data,
-      primaryColor: Theme.of(context).primaryColor,
+      primaryColor: Colors.orange.shade300,
       menuLogoPath: 'assets/images/logo.png',
       buttonPath: 'assets/images/primary_button.png',
       labelPath: 'assets/images/label.png',
